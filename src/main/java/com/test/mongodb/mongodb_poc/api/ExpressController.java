@@ -1,5 +1,6 @@
 package com.test.mongodb.mongodb_poc.api;
 
+import java.util.Arrays;
 import java.util.List;import javax.management.Attribute;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,31 +11,44 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.test.mongodb.mongodb_poc.dto.ProductExperienceDTO;
 import com.test.mongodb.mongodb_poc.model.Attributes;
 import com.test.mongodb.mongodb_poc.model.Experience;
 import com.test.mongodb.mongodb_poc.model.Product;
+import com.test.mongodb.mongodb_poc.model.ProductExperience;
 import com.test.mongodb.mongodb_poc.repo.AttributesRepository;
+import com.test.mongodb.mongodb_poc.repo.ExperienceRepository;
+import com.test.mongodb.mongodb_poc.repo.ProductExperienceRepository;
 import com.test.mongodb.mongodb_poc.repo.ProductRepository;
+import com.test.mongodb.mongodb_poc.service.ProductExperienceService;
+
+import lombok.AllArgsConstructor;
 
 @RestController
+@AllArgsConstructor
 public class ExpressController {
 	
-	@Autowired
 	private ProductRepository productRepository;
-	
-	@Autowired
 	private AttributesRepository attributesRepositories;
-	
-	@RequestMapping(value = "/getAll", method = RequestMethod.GET, produces="application/json")
-	public ResponseEntity<List<Product>> getAllProduct() {
-		List<Product> productList = productRepository.findAll();
-		System.err.println(productList);
-		return ResponseEntity.ok(productList);
+	private ExperienceRepository experienceRepository;
+	private ProductExperienceService productExperienceService;
+
+	@GetMapping("/getAllProds")
+	public List<Product> getAllProducts() {
+		return productRepository.findAll();
+	}
+	@GetMapping("/allAttr")
+	public List<Attributes> getAllAttributes() {
+		return attributesRepositories.findAll();
 	}
 	
-	@PostMapping("/save")
-	public String saveProduct() {
-		attributesRepositories.save(new Attributes(10,"Sumit"));
-		return "Saved !!";
+	@GetMapping("/allExp")
+	public List<Experience> getAllExperience() {
+		return experienceRepository.findAll();
+	}
+	
+	@GetMapping("/getProdExp")
+	public List<ProductExperienceDTO> getProductExperiences() {
+		return productExperienceService.getProductExperiences();
 	}
 }

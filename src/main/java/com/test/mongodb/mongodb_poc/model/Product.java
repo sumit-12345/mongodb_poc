@@ -19,16 +19,10 @@ import lombok.ToString;
 public class Product {
 	@Id
 	private ObjectId id;
-	@Field(name = "Name")
+	@Field(value = "product_id")
+	private int productId;
 	private String name;
-	@Field(name = "Brand")
-	private String brand;
-	@Field(name = "Model")
 	private String model;
-	@Field(name = "Colour")
-	private String color;
-	@Field(name = "Customer_Reviews")
-	private String customer_reviews;
-	@Field(name = "Date_first_available")
-	private String date_of_frst_available;
+	@Field(value = "product_resource_key")
+	private String productResourceKey;
 }
